@@ -1,0 +1,242 @@
+﻿<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <title>Example Validation</title>
+	<link rel="stylesheet" href="css/lib/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/lib/bootstrap-datetimepicker.css">
+	<script src="scripts/lib/jquery-latest.min.js"></script>
+	<script src="scripts/lib/bootstrap.min.js"></script>
+	<script src="scripts/lib/knockout-min.js"></script>
+	<script src="scripts/lib/jquery.creditCardValidator.js"></script>
+	<script src="scripts/lib/moment-with-locales.js"></script>
+	<script src="scripts/lib/bootstrap-datetimepicker.min.js"></script>
+	<script src="scripts/lib/moment.js"></script>
+				
+	<!-- Custom files -->
+	<link rel="stylesheet" type="text/css" href="css/site.css">
+	
+	<script src="scripts/site.js"></script>
+	<script src="scripts/validation.js"></script>
+	<script src="scripts/pageValidation.js"></script>
+	
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->		
+	
+	<script>
+		
+	$().ready(function() {
+		var data = {
+			name: "Fred",
+			password: "",
+			email: "fred@somthing.com",
+			phone: "0845062122",
+			pan: "5359-2430-0107-2638",
+			amount: "230.45",
+			quantity: 0,
+			rsid: undefined,
+			birthday: site.common.date.now(),
+			isCitizen: "false",
+			createTime: new Date
+		};
+		
+		site.page.createViewModel(data);
+		ko.applyBindings(site.page.viewModel);			
+	});					
+			
+	</script>
+	
+</head>
+<body>
+   <div class="container">
+	  <form class="form-inline">
+		<div class="page-header">
+			<h1>Page Validation Examples</h1>
+			<p class="lead">This example will show you how to do basic and custom validation on a single form page.</p>
+			<a href="index.html">Page Validation</a> | <a href="group.html">Grouped Validation</a>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">
+				*<label for="name">Name</label>			
+			</div>
+			<div class="col-md-4">
+				 <input type="text" class="form-control fill-max" id="name" data-bind="value: name, css: {error: name.hasError}">
+				 <span class="error" data-bind="text: name.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				*<label for="name">Password</label>			
+			</div>
+			<div class="col-md-4">
+				 <input type="password" class="form-control fill-max" id="password" data-bind="value: password, css: {error: password.hasError}">
+				 <span class="error" data-bind="text: password.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="phone">Phone Number</label>
+			</div>
+			<div class="col-md-4">
+				 <input type="text" maxlength="12" class="form-control fill-max" id="phone" placeholder="+27 __ ___ ____" data-bind="value: phone, css: {error: phone.hasError}">
+				 <span class="error" data-bind="text: phone.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="birthday">Birthday</label>			
+			</div>
+			<div class="col-md-4">
+			
+				<div class="form-group">
+					<div class="input-group date">
+						<input id="birthday" type='text' class="form-control" data-bind="datepicker: birthday" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+				 <span class="error" data-bind="text: birthday.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="birthday">Time</label>			
+			</div>
+			<div class="col-md-4">
+			
+				<div class="form-group">
+					<div class='input-group date'>
+						<input type='text' class="form-control" data-bind="dateTime: createTime" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-time"></span>
+						</span>
+					</div>
+				</div>
+				 <span class="error" data-bind="text: birthday.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				*<label for="email">Email</label>			
+			</div>
+			<div class="col-md-4">
+				 <input type="text" class="form-control fill-max" id="email" placeholder="Email address" data-bind="value: email, css: {error: email.hasError}">
+				 <span class="error" data-bind="text: email.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="pan">Card PAN</label>			
+			</div>
+			<div class="col-md-4">
+				 <input type="text" maxlength="19" class="form-control fill-max" id="pan" placeholder="____-____-____-____" data-bind="value: pan, css: {error: pan.hasError}">
+				 <span class="error" data-bind="text: pan.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="amount">Amount</label>			
+			</div>
+			<div class="col-md-4">
+				 <input type="text" class="form-control fill-max" id="amount" data-bind="value: amount, css: {error: amount.hasError}">
+				 <span class="error" data-bind="text: amount.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="quantity">Quantity</label>			
+			</div>
+			<div class="col-md-4">
+				 <input type="text" class="form-control fill-max" id="quantity" data-bind="value: quantity, css: {error: quantity.hasError}">
+				 <span class="error" data-bind="text: quantity.message"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="isCitizen">Is RSA Citizen?</label>			
+			</div>
+            <div id="isCitizen" class="col-md-4">
+                Yes <input name="isCitizen" type="radio" value="true" data-bind="checked: isCitizen">
+                No <input name="isCitizen" type="radio" value="false" data-bind="checked: isCitizen">
+                <span class="error" data-bind="text: isCitizen.message"></span>
+            </div>
+		</div>
+	      <div class="row">
+	          <div class="col-md-2">
+	              <label for="rsid"><span data-bind="visible: isCitizen.value">*</span>South African ID</label>
+	          </div>
+	          <div class="col-md-4">
+	              <input type="text" class="form-control fill-max" id="rsid" data-bind="value: rsid, css: {error: rsid.hasError}">
+	              <span class="error" data-bind="text: rsid.message"></span>
+	          </div>
+	      </div>
+	      <div class="row">
+	          <div class="col-md-2">
+	              <label for="futureDate">Future Date</label>
+	          </div>
+	          <div class="col-md-4">
+
+	              <div class="form-group">
+	                  <div class="input-group date">
+	                      <input id="futureDate" type="text" class="form-control" data-bind="datepicker: futureDate"/>
+	                      <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+	                  </div>
+	              </div>
+                <span class="error" data-bind="text: futureDate.message, css: {error: futureDate.hasError}"></span>
+	          </div>
+	      </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="betweenDate">Between Date</label>
+            </div>
+            <div class="col-md-4">
+
+                <div id="betweenDate" class="form-group">
+                    <div class="input-group date">
+                        <input type="text" class="form-control" data-bind="datepicker: dateOne, css: {error: dateOne.hasError}" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    to
+                    <div class="input-group date">
+                        <input type="text" class="form-control" data-bind="datepicker: dateTwo, css: {error: dateTwo.hasError}" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <span class="error" data-bind="text: dateOne.message"></span>
+                <span class="error" data-bind="text: dateTwo.message"></span>
+            </div>
+        </div>
+
+		<hr>		
+		<hr />
+		<div class="row">
+			<div class="col-md-1">
+				<button type="submit" class="btn btn-default" data-bind="click: onSubmit">Submit</button>			
+			</div>
+			<div class="col-md-4">
+				<span data-bind="text: message" class="feedback"></span>			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-6"><span id="output"></span></div>
+		</div>
+		
+	  </form>		
+    </div>	
+	
+</body>
+</html>
